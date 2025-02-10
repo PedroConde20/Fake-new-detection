@@ -1,0 +1,10 @@
+# syntax=docker/dockerfile:1
+FROM ubuntu:20.04
+##habilitar puerto del servidor
+EXPOSE 3306
+
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y mysql-server && service mysql start && mysql -e CREATE DATABASE newsDb; && mysql -e USE newsDb; && mysql -e CREATE TABLE user(id_user int NOT NULL AUTO_INCREMENT, name varchar(100), email varchar(100), password varchar(100), role int, date_register datetime, date_upgrade datetime, condition int, PRIMARY KEY(id)); INSERT INTO user(name, email, password, role, date_register, date_upgrade, condition) VALUES ('Juan', 'jaun2@gmail.com', '12345', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1); CREATE USER 'root'@'%' IDENTIFIED BY 'Univalle'; GRANT ALL ON newsDb.* TO 'root'@'%';"
+
+RUN sed -i 's/bind-address.*/bind-address = 0.0.0.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf
+##ejecutar el servico de mysql
+CMD ["mysqld"]

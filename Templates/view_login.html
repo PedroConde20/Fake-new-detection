@@ -1,0 +1,40 @@
+{% extends 'layout_master.html' %}
+{% block body %}
+
+<div class="row">
+    <div class="col-ml-7">
+        <div class="card border-dark mb-3 mt-2">
+            <div class="card-header">INICIO DE SESION</div>
+            <div class="card-body text-bg-active">
+                <form action="/login" method="POST">
+                    <label for="txtEmail" class="form-label pt-2 text-capitalize">Ingrese su correo electronico</label>
+                    <input class="form-control" type="text" id="txtEmail" name="email" placeholder="Correo electronico" required>
+                    <label for="txtPassword" class="form-label pt-2 text-capitalize">Ingrese su contrasenha</label>
+                    <input class="form-control" type="text" id="txtPassword" name="password" placeholder="Contrasenha" required>
+                    <div class="form-group pt-2">
+                        <button type="submit" class="btn btn-outline-light text-capitalize" >
+                            Iniciar Sesion
+                        </button>
+                    </div>
+                    <div class="btn btn-outline-success mt-2">
+                        <a href="/list">
+                            Crear nueva cuenta
+                        </a>
+                    </div>
+                </form>
+            </div>
+          </div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>
+
+{% endblock %}

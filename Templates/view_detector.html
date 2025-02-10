@@ -1,0 +1,38 @@
+{% extends 'layout_master.html' %}
+{% block body %}
+
+<div class="row">
+    <div class="col-ml-7">
+        <div class="card border-dark mb-3 mt-2">
+            <div class="card-header">VERIFICA TU NOTICIA O ARTICULO USANDO ESTE DETECTOR</div>
+            <div class="card-body text-bg-active">
+                <form action="/predict" method="POST">
+                    <label for="txtNoticia" class="form-label pt-2 text-capitalize">Ingrese la noticia que quiere verificar</label>
+                    <textarea class="form-control" type="text" id="txtNoticia" name="message" placeholder="Ingrese la noticia" required rows="8" cols="50"></textarea>
+                    <div class="form-group pt-2">
+                        <button type="submit" class="btn btn-outline-light text-capitalize" >
+                            Detectar Noticia
+                        </button>
+                    </div>
+                    {% if prediction == ['FAKE']%}
+	                    <h2 class="mt-2" style="color:red;"> La noticia es falsa!!⚠️📰 </h2>
+	                {% elif prediction == ['REAL']%}
+				        <h2 class="mt-2" style="color:green;"><b> La noticia es real!!📰</b></h2>
+	                {% endif %}
+                </form>
+            </div>
+        </div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+</div>
+
+{% endblock %}
